@@ -17,6 +17,11 @@
 			get; set;
 		} = null!;
 
+		public decimal Price
+		{
+			get; set;
+		}
+
 		public Brand Brand
 		{
 			get; set;

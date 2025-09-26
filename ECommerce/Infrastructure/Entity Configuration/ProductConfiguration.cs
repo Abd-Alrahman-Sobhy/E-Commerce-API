@@ -17,6 +17,10 @@ namespace Infrastructure.Entity_Configuration
 			builder.Property(product => product.PictureUrl)
 				.IsRequired();
 
+			builder.Property(product => product.Price)
+				.IsRequired()
+				.HasPrecision(6, 2);
+
 			builder.Property(product => product.Description)
 				.HasMaxLength(300);
 

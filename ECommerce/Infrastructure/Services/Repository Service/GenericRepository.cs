@@ -35,7 +35,10 @@ namespace Infrastructure.Services.Repository_Service
 			if (typeof(TEntity) == typeof(Product))
 			{
 				var product = await context.Products
-					.FindAsync(id);
+					.Include(product => product.Brand)
+					.Include(product => product.ProductType)
+					.Where(product => product.Id == id)
+					.FirstOrDefaultAsync();
 
 				return product as TEntity;
 			}

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20250926133007_InitialMigration")]
+    [Migration("20250926174806_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -63,6 +63,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PictureUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(6, 2)
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<int>("ProductBrandId")
                         .HasColumnType("int");
