@@ -35,6 +35,9 @@ namespace API.Controllers
 			var brandRepository = unitOfWork.Repository<Brand>();
 			var brand = await brandRepository!.GetByIdAsync(id);
 
+			if (brand == null)
+				return NotFound();
+
 			return Ok(mapper.Map<BrandOutputDto>(brand));
 		}
 
@@ -44,8 +47,11 @@ namespace API.Controllers
 			var productRepository = unitOfWork.Repository<Product>();
 			var products = await productRepository!.GetAllAsync();
 			var productsByBrandId = products.Where(product => product.ProductBrandId == id).ToList();
-
-			return Ok(mapper.Map<IEnumerable<ProductOutputDto>>(productsByBrandId));
+			if (productsByBrandId.Any())
+			{
+				return Ok(mapper.Map<IEnumerable<ProductOutputDto>>(productsByBrandId));
+			}
+			return NotFound();
 		}
 	}
 }
