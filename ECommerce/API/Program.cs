@@ -11,6 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddingContext(builder.Configuration);
 
+builder.Services.AutoMapperConfiguration();
+
 var app = builder.Build();
 
 await ApplingMigrationAndSeeding.MigrateAndSeedAsync(app.Services);
