@@ -13,6 +13,8 @@ builder.Services.AddingContext(builder.Configuration);
 
 builder.Services.AutoMapperConfiguration();
 
+builder.Services.DependencyService();
+
 var app = builder.Build();
 
 await ApplingMigrationAndSeeding.MigrateAndSeedAsync(app.Services);
