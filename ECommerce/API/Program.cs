@@ -1,4 +1,5 @@
 using Infrastructure.Building_Configuration;
+using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddingContext(builder.Configuration);
 
 var app = builder.Build();
+
+await ApplingMigrationAndSeeding.MigrateAndSeedAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {

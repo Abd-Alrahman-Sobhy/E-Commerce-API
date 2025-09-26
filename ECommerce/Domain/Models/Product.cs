@@ -22,7 +22,7 @@
 			get; set;
 		} = null!;
 
-		public int BrandId
+		public int ProductBrandId
 		{
 			get; set;
 		}

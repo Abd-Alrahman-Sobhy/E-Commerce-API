@@ -22,7 +22,7 @@ namespace Infrastructure.Entity_Configuration
 
 			builder.HasOne(product => product.Brand)
 				.WithMany(brand => brand.Products)
-				.HasForeignKey(product => product.BrandId);
+				.HasForeignKey(product => product.ProductBrandId);
 
 			builder.HasOne(product => product.ProductType)
 				.WithMany(productType => productType.Products)
