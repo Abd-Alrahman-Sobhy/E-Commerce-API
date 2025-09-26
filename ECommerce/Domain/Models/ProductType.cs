@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-	public sealed class ProductType
+	public sealed class ProductType : BaseEntity
 	{
 		public string Name
 		{

@@ -32,7 +32,7 @@
 			get; set;
 		} = null!;
 
-		public int ProductId
+		public int ProductTypeId
 		{
 			get; set;
 		}
