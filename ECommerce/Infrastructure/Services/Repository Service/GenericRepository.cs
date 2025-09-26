@@ -7,18 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services.Repository_Service
 {
-	public sealed class GenericRepository<TEntity, TOutputDto> : IGenericRepository<TEntity, TOutputDto> where TEntity : BaseEntity
+	public sealed class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
 	{
 		private readonly ECommerceContext context;
-		private readonly IMapper mapper;
 
-		public GenericRepository(IMapper mapper, ECommerceContext context)
+		public GenericRepository(ECommerceContext context)
 		{
-			this.mapper = mapper;
 			this.context = context;
 		}
 
-		public async Task<IEnumerable<TOutputDto>> GetAllAsync()
+		public async Task<IEnumerable<TEntity>> GetAllAsync()
 		{
 			if (typeof(TEntity) == typeof(Product))
 			{
@@ -26,27 +24,27 @@ namespace Infrastructure.Services.Repository_Service
 					.Include(product => product.Brand)
 					.Include(product => product.ProductType)
 					.ToListAsync();
-				return mapper.Map<IEnumerable<TOutputDto>>(products);
+				return (IEnumerable<TEntity>)products;
 			}
 			var entities = await context.Set<TEntity>().ToListAsync();
-			return mapper.Map<IEnumerable<TOutputDto>>(entities);
+			return entities;
 		}
 
-		public async Task<TOutputDto?> GetByIdAsync(int id)
+		public async Task<TEntity?> GetByIdAsync(int id)
 		{
 			if (typeof(TEntity) == typeof(Product))
 			{
 				var product = await context.Products
 					.FindAsync(id);
 
-				return mapper.Map<TOutputDto>(product);
+				return product as TEntity;
 			}
 
 			var entity = await context.Set<TEntity>()
 				.Where(entity => entity.Id == id)
 				.FirstOrDefaultAsync();
 
-			return mapper.Map<TOutputDto>(entity);
+			return entity;
 		}
 
 		public void AddAsync(TEntity InputEntity)

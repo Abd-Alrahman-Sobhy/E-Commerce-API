@@ -2,11 +2,11 @@
 
 namespace Application.Interfaces.Generic_Repository_Interface
 {
-	public interface IGenericRepository<TEntity, TOutputDto> where TEntity : BaseEntity
+	public interface IGenericRepository<TEntity> where TEntity : BaseEntity
 	{
-		Task<IEnumerable<TOutputDto>> GetAllAsync();
+		Task<IEnumerable<TEntity>> GetAllAsync();
 
-		Task<TOutputDto?> GetByIdAsync(int id);
+		Task<TEntity?> GetByIdAsync(int id);
 
 		void AddAsync(TEntity InputEntity);
 
