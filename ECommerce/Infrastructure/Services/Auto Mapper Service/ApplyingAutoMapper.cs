@@ -7,7 +7,7 @@ namespace Infrastructure.Services
 	{
 		public static IServiceCollection AutoMapperConfiguration(this IServiceCollection services)
 		{
-			services.AddAutoMapper(typeof(MapperProfile));
+			services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 			return services;
 		}

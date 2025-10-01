@@ -29,9 +29,9 @@ namespace Infrastructure.Services.Unit_Of_Work_service
 			return Repositories[key] as IGenericRepository<TEntity>;
 		}
 
-		public int Complete()
+		public async Task CompleteAsync()
 		{
-			return context.SaveChanges();
+			await context.SaveChangesAsync();
 		}
 
 		public void Dispose()

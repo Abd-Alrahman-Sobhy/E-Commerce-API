@@ -15,6 +15,8 @@ namespace Infrastructure.Auto_Mapper
 			CreateMap<Product, ProductOutputDto>()
 				.ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name))
 				.ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.ProductType.Name));
+
+			CreateMap<ProductInputDto, Product>();
 		}
 	}
 }

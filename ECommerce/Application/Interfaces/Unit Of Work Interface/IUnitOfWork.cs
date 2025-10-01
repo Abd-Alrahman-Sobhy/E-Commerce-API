@@ -7,6 +7,6 @@ namespace Application.Interfaces.Unit_Of_Work_Interface
 	{
 		IGenericRepository<TEntity>? Repository<TEntity>() where TEntity : BaseEntity;
 
-		public int Complete();
+		public Task CompleteAsync();
 	}
 }

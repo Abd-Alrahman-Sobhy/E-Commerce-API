@@ -1,4 +1,5 @@
-﻿using Application.Dtos.Product_Dtos;
+﻿using API.Filters;
+using Application.Dtos.Product_Dtos;
 using Application.Interfaces.Unit_Of_Work_Interface;
 using AutoMapper;
 using Domain.Models;
@@ -36,6 +37,17 @@ namespace API.Controllers
 			var product = await productRepository!.GetByIdAsync(id);
 
 			return Ok(mapper.Map<ProductOutputDto>(product));
+		}
+
+		[HttpPost("create")]
+		public async Task<ActionResult> Create([FromBody] ProductInputDto inputProduct)
+		{
+			var productToAdd = mapper.Map<Product>(inputProduct);
+			var productRepository = unitOfWork.Repository<Product>();
+			productRepository!.AddAsync(productToAdd);
+			await unitOfWork.CompleteAsync();
+
+			return Created();
 		}
 	}
 }

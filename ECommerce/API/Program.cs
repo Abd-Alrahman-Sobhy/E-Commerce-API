@@ -1,10 +1,14 @@
+using API.Filters;
 using API.Middlewares;
 using Infrastructure.Building_Configuration;
 using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+	options.Filters.Add<ValidationFilter>();
+});
 
 builder.Services.AddEndpointsApiExplorer();
 
