@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+	[ServiceFilter(typeof(ValidationFilter))]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class ProductController : ControllerBase

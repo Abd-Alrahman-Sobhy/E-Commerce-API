@@ -5,10 +5,12 @@ using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(options =>
-{
-	options.Filters.Add<ValidationFilter>();
-});
+//builder.Services.AddControllers(options =>
+//{
+//	options.Filters.Add<ValidationFilter>();
+//});
+
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -19,6 +21,8 @@ builder.Services.AddingContext(builder.Configuration);
 builder.Services.AutoMapperConfiguration();
 
 builder.Services.DependencyService();
+
+builder.Services.AddScoped<ValidationFilter>();
 
 var app = builder.Build();
 
