@@ -35,11 +35,6 @@ namespace API.Controllers
 			var productRepository = unitOfWork.Repository<Product>();
 			var product = await productRepository!.GetByIdAsync(id);
 
-			if (product == null)
-			{
-				return NotFound();
-			}
-
 			return Ok(mapper.Map<ProductOutputDto>(product));
 		}
 	}

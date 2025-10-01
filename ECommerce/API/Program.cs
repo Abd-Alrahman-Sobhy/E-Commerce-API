@@ -1,3 +1,4 @@
+using API.Middlewares;
 using Infrastructure.Building_Configuration;
 using Infrastructure.Services;
 
@@ -16,6 +17,8 @@ builder.Services.AutoMapperConfiguration();
 builder.Services.DependencyService();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 await ApplingMigrationAndSeeding.MigrateAndSeedAsync(app.Services);
 

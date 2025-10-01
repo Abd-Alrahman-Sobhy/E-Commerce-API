@@ -40,6 +40,11 @@ namespace Infrastructure.Services.Repository_Service
 					.Where(product => product.Id == id)
 					.FirstOrDefaultAsync();
 
+				if (product == null)
+				{
+					throw new Exception("Entity not found");
+				}
+
 				return product as TEntity;
 			}
 
