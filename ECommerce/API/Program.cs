@@ -10,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 //	options.Filters.Add<ValidationFilter>();
 //});
 
+builder.Logging.ClearProviders();
+
+builder.Logging.AddConsole();
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
