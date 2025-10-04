@@ -22,11 +22,11 @@ namespace API.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<ProductOutputDto>>> GetAll()
+		public async Task<ActionResult<IEnumerable<ProductOutputDto>>> GetAll([FromQuery] ProductQueryParameters query)
 		{
 			var productRepository = unitOfWork.Repository<Product>();
 
-			var products = await productRepository!.GetAllAsync();
+			var products = await productRepository!.GetAllAsync(query);
 
 			return Ok(mapper.Map<IEnumerable<ProductOutputDto>>(products));
 		}

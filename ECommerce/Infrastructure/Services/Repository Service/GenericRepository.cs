@@ -1,6 +1,6 @@
 ﻿using Application.Dtos.Product_Dtos;
 using Application.Interfaces.Generic_Repository_Interface;
-using AutoMapper;
+using Application.Specifications;
 using Domain.Models;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +19,54 @@ namespace Infrastructure.Services.Repository_Service
 			this.logger = logger;
 		}
 
-		public async Task<IEnumerable<TEntity>> GetAllAsync()
+		public async Task<IEnumerable<TEntity>> GetAllAsync(ProductQueryParameters? query = null)
 		{
+			//if (typeof(TEntity) == typeof(Product))
+			//{
+			//	var products = await context.Products
+			//		.Include(product => product.Brand)
+			//		.Include(product => product.ProductType)
+			//		.ToListAsync();
+			//	return (IEnumerable<TEntity>)products;
+			//}
+			//var entities = await context.Set<TEntity>().ToListAsync();
+			//return entities;
+
 			if (typeof(TEntity) == typeof(Product))
 			{
-				var products = await context.Products
-					.Include(product => product.Brand)
-					.Include(product => product.ProductType)
-					.ToListAsync();
+				var specification = new ProductSpecification(
+				search: query.Search,
+				sort: query.Sort,
+				minPrice: query.MinPrice,
+				maxPrice: query.MaxPrice);
+
+				IQueryable<Product> productsQuery = context.Products;
+
+				foreach (var include in specification.Includes)
+				{
+					productsQuery = productsQuery.Include(include);
+				}
+
+				if (specification.Criteria != null)
+					productsQuery = productsQuery.Where(specification.Criteria);
+
+				if (specification.OrderBy != null)
+					productsQuery = specification.OrderBy(productsQuery);
+				else if (specification.OrderByDescending != null)
+					productsQuery = specification.OrderByDescending(productsQuery);
+
+				int pageNumber = query.PageNumber ?? 1;
+				int pageSize = query.PageSize ?? 10;
+
+				productsQuery = productsQuery
+					.Skip((pageNumber - 1) * pageSize)
+					.Take(pageSize);
+
+				var products = await productsQuery.ToListAsync();
+
 				return (IEnumerable<TEntity>)products;
 			}
+
 			var entities = await context.Set<TEntity>().ToListAsync();
 			return entities;
 		}
